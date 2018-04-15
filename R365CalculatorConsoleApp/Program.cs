@@ -9,50 +9,62 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("//[*][%]\n1*2%3");
-            Console.WriteLine(input);
+            var input = Add("//;\n1;2;4;5");
             Console.ReadLine();
         }
 
         public static int Add(params string[] text)
         {
 
-            char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', '/', ';', '[', ']', '*', '%' };
+            char[] defaultDelimiterChars = { ' ', ',', '.', ':', '\t', '\n', '/', ';', '[', ']', '*', '%' };
             List<int> numbers = new List<int>();
+            var sum = 0;
+            List<int> negativeNumbers = new List<int>();
             for (int i = 0; i < text.Length; i++)
             {
-                string[] words = text[i].Split(delimiterChars);
+                string[] words = text[i].Split(defaultDelimiterChars);
                 foreach (var word in words)
                 {
                     if (word != "")
                     {
                         int stringToInt = Convert.ToInt32(word);
-
-                        try
+                        if (stringToInt < 1000)
                         {
                             if (stringToInt < 0)
                             {
-                                throw new System.Exception();
+                                negativeNumbers.Add(stringToInt);
                             }
-
                             else
                             {
                                 numbers.Add(stringToInt);
                             }
                         }
-
-                        catch (Exception)
-                        {
-                            Console.WriteLine("Negatives not allowed!");
-                            Console.WriteLine(word);
-                        }
                     }
-
                 }
             }
+            try
+            {
+                if (negativeNumbers.Count > 0)
+                {
+                    throw new System.Exception();
+                }
+                else
+                {
+                    sum = numbers.Sum();
+                    Console.WriteLine(sum);
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Negatives are not allowed!");
+                negativeNumbers.ForEach(i => Console.Write("{0}\t", i));
+            }
 
-            int sum = numbers.Sum();
             return sum;
+
+
+
+
         }
     }
 }
