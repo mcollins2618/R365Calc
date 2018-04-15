@@ -9,20 +9,30 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("//;\n1;2;4;5");
+            var input = Add("//;\n-1;-2;3");
             Console.ReadLine();
         }
 
         public static int Add(params string[] text)
         {
-
-            char[] defaultDelimiterChars = { ' ', ',', '.', ':', '\t', '\n', '/', ';', '[', ']', '*', '%' };
+            //Custom Delimeter
+            var delimStart = text[0].Split('\n').First();
+            char[] delimOption = delimStart.Split('/').Last().ToCharArray();
+            //Default Delimeters
+            char[] defaultDelimiterChars = { '\n', '/' };
+            var delimList = new List<char>();
+            delimList.AddRange(delimOption);
+            delimList.AddRange(defaultDelimiterChars);
+            //Delimeter character List
+            char[] finalDelim = delimList.ToArray();
+            
             List<int> numbers = new List<int>();
             var sum = 0;
             List<int> negativeNumbers = new List<int>();
             for (int i = 0; i < text.Length; i++)
             {
-                string[] words = text[i].Split(defaultDelimiterChars);
+                string[] words = text[i].Split(finalDelim);
+
                 foreach (var word in words)
                 {
                     if (word != "")
