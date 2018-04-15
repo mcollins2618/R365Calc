@@ -15,27 +15,28 @@ namespace R365CalculatorConsoleApp
 
         public static int Add(params string[] text)
         {
+            //Number Lists
+            List<int> numbers = new List<int>();
+            List<int> negativeNumbers = new List<int>();
+            //Default Delimeters
             char[] defaultDelimiterChars = { '\n', '/', ',', ']' };
             char[] charList;
+            var delimList = new List<char>();
+            var totalSum = 0;
             if (text[0].Contains("/"))
             {
-                //Custom Delimeter
+                //Custom Delimeter list creation
                 var delimStart = text[0].Split('\n').First();
                 char[] delimOption = delimStart.Split('/').Last().ToCharArray();
-                //Default Delimeters
-                var delimList = new List<char>();
                 delimList.AddRange(delimOption);
                 delimList.AddRange(defaultDelimiterChars);
-                //Delimeter character List
+                //Delimeter character array
                 charList = delimList.ToArray();
             }
             else
             {
                 charList = defaultDelimiterChars;
             }
-            List<int> numbers = new List<int>();
-            List<int> negativeNumbers = new List<int>();
-            var totalSum = 0;
             for (int i = 0; i < text.Length; i++)
             {
                 //Splits the string input to remove any and all delim's
@@ -48,7 +49,7 @@ namespace R365CalculatorConsoleApp
                         //Check and ignore any converted int that is above 1000
                         if (stringToInt < 1000)
                         {
-                            //Negative Number check
+                            //Negative Number check. Will add any negative numbers to list which will trigger exception
                             if (stringToInt < 0)
                             {
                                 negativeNumbers.Add(stringToInt);
@@ -62,11 +63,12 @@ namespace R365CalculatorConsoleApp
                 }
             }
             //Try Catch that will throw exception when a negative number is found. 
+            //If no negatives are found - totalSum will calculate and be displayed.
             try
             {
                 if (negativeNumbers.Count > 0)
                 {
-                    throw new System.Exception();
+                    throw new Exception();
                 }
                 else
                 {
