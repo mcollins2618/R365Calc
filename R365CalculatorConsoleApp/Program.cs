@@ -9,7 +9,7 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("1,1,1,1,1,1,1,1,1,1");
+            var input = Add("//[*][%]\n1*2%3");
             Console.WriteLine(input);
             Console.ReadLine();
         }
@@ -17,7 +17,7 @@ namespace R365CalculatorConsoleApp
         public static int Add(params string[] text)
         {
 
-            char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n' };
+            char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n', '/', ';', '[', ']', '*', '%' };
             List<int> numbers = new List<int>();
             for (int i = 0; i < text.Length; i++)
             {
@@ -27,8 +27,27 @@ namespace R365CalculatorConsoleApp
                     if (word != "")
                     {
                         int stringToInt = Convert.ToInt32(word);
-                        numbers.Add(stringToInt);
+
+                        try
+                        {
+                            if (stringToInt < 0)
+                            {
+                                throw new System.Exception();
+                            }
+
+                            else
+                            {
+                                numbers.Add(stringToInt);
+                            }
+                        }
+
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Negatives not allowed!");
+                            Console.WriteLine(word);
+                        }
                     }
+
                 }
             }
 
