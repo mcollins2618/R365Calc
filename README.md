@@ -1,5 +1,5 @@
 # R365Calc
-Created by Matt Collins to be viewed by Restaurant365
+Created by Matt Collins to be viewed by Restaurant365.<br>
 Multiple commits to allow for ever changing conditional steps:
 
 1.)Create a simple String calculator with a method int Add(string numbers)
