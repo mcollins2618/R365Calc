@@ -9,7 +9,7 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("//;\n-1;-2;3");
+            var input = Add("//[*][%]\n*2%1003");
             Console.ReadLine();
         }
 
@@ -24,22 +24,23 @@ namespace R365CalculatorConsoleApp
             delimList.AddRange(delimOption);
             delimList.AddRange(defaultDelimiterChars);
             //Delimeter character List
-            char[] finalDelim = delimList.ToArray();
-            
+            char[] delimArray = delimList.ToArray();
             List<int> numbers = new List<int>();
-            var sum = 0;
             List<int> negativeNumbers = new List<int>();
+            var totalSum = 0;
             for (int i = 0; i < text.Length; i++)
             {
-                string[] words = text[i].Split(finalDelim);
-
+                //Splits the string input to remove any and all delim's
+                string[] words = text[i].Split(delimArray);
                 foreach (var word in words)
                 {
                     if (word != "")
                     {
                         int stringToInt = Convert.ToInt32(word);
+                        //Check and ignore any converted int that is above 1000
                         if (stringToInt < 1000)
                         {
+                            //Negative Number check
                             if (stringToInt < 0)
                             {
                                 negativeNumbers.Add(stringToInt);
@@ -52,6 +53,7 @@ namespace R365CalculatorConsoleApp
                     }
                 }
             }
+            //Try Catch that will throw exception when a negative number is found. 
             try
             {
                 if (negativeNumbers.Count > 0)
@@ -60,8 +62,8 @@ namespace R365CalculatorConsoleApp
                 }
                 else
                 {
-                    sum = numbers.Sum();
-                    Console.WriteLine(sum);
+                    totalSum = numbers.Sum();
+                    Console.WriteLine(totalSum);
                 }
             }
             catch (Exception)
@@ -70,7 +72,7 @@ namespace R365CalculatorConsoleApp
                 negativeNumbers.ForEach(i => Console.Write("{0}\t", i));
             }
 
-            return sum;
+            return totalSum;
 
 
 
