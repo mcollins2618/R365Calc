@@ -9,29 +9,37 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("//[*][%]\n*2%1003");
+            var input = Add("//[*][%]\n-1*2%3");
             Console.ReadLine();
         }
 
         public static int Add(params string[] text)
         {
-            //Custom Delimeter
-            var delimStart = text[0].Split('\n').First();
-            char[] delimOption = delimStart.Split('/').Last().ToCharArray();
-            //Default Delimeters
-            char[] defaultDelimiterChars = { '\n', '/' };
-            var delimList = new List<char>();
-            delimList.AddRange(delimOption);
-            delimList.AddRange(defaultDelimiterChars);
-            //Delimeter character List
-            char[] delimArray = delimList.ToArray();
+            char[] defaultDelimiterChars = { '\n', '/', ',', ']' };
+            char[] charList;
+            if (text[0].Contains("/"))
+            {
+                //Custom Delimeter
+                var delimStart = text[0].Split('\n').First();
+                char[] delimOption = delimStart.Split('/').Last().ToCharArray();
+                //Default Delimeters
+                var delimList = new List<char>();
+                delimList.AddRange(delimOption);
+                delimList.AddRange(defaultDelimiterChars);
+                //Delimeter character List
+                charList = delimList.ToArray();
+            }
+            else
+            {
+                charList = defaultDelimiterChars;
+            }
             List<int> numbers = new List<int>();
             List<int> negativeNumbers = new List<int>();
             var totalSum = 0;
             for (int i = 0; i < text.Length; i++)
             {
                 //Splits the string input to remove any and all delim's
-                string[] words = text[i].Split(delimArray);
+                string[] words = text[i].Split(charList);
                 foreach (var word in words)
                 {
                     if (word != "")
