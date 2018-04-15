@@ -9,24 +9,29 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("\t1,2");
+            var input = Add("1,1,1,1,1,1,1,1,1,1");
             Console.WriteLine(input);
             Console.ReadLine();
         }
 
-        public static int Add(string text)
+        public static int Add(params string[] text)
         {
-            char[] delimiterChars = { ' ', ',', '.', ':', '\t' };
+
+            char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\n' };
             List<int> numbers = new List<int>();
-            string[] words = text.Split(delimiterChars);
-            foreach (var word in words)
+            for (int i = 0; i < text.Length; i++)
             {
-                if (word != "")
+                string[] words = text[i].Split(delimiterChars);
+                foreach (var word in words)
                 {
-                    int stringToInt = Convert.ToInt32(word);
-                    numbers.Add(stringToInt);
+                    if (word != "")
+                    {
+                        int stringToInt = Convert.ToInt32(word);
+                        numbers.Add(stringToInt);
+                    }
                 }
             }
+
             int sum = numbers.Sum();
             return sum;
         }
