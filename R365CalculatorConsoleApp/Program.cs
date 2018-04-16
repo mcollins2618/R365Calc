@@ -9,7 +9,7 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("//[*][%]\n-1*2%3");
+            var input = Add("//[;]\n1;2;3");
             Console.ReadLine();
         }
 
@@ -73,7 +73,7 @@ namespace R365CalculatorConsoleApp
                 else
                 {
                     totalSum = numbers.Sum();
-                    Console.WriteLine(totalSum);
+                    Console.WriteLine("Total:" + " " + totalSum);
                 }
             }
             catch (Exception)
@@ -83,9 +83,6 @@ namespace R365CalculatorConsoleApp
             }
 
             return totalSum;
-
-
-
 
         }
     }
