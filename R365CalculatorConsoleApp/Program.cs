@@ -9,7 +9,7 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var input = Add("//[;]\n1;2;3");
+            var input = Add("//[;][%][$]\n4;7%10$14");
             Console.ReadLine();
         }
 
@@ -20,27 +20,26 @@ namespace R365CalculatorConsoleApp
             List<int> negativeNumbers = new List<int>();
             //Default Delimeters
             char[] defaultDelimiterChars = { '\n', '/', ',', ']' };
-            char[] charList;
+            char[] delimCharArray; //*****NEW ADDITION - Changed naming convention to be less confusing
             var delimList = new List<char>();
             var totalSum = 0;
-            if (text[0].Contains("/"))
+            if (text[0].Contains("//"))
             {
                 //Custom Delimeter list creation
                 var delimStart = text[0].Split('\n').First();
-                char[] delimOption = delimStart.Split('/').Last().ToCharArray();
+                char[] delimOption = delimStart.Split('/').Last().Distinct().ToArray(); //*****NEW ADDITION - Custom Delim options to be Distinct rather than showing duplicates
                 delimList.AddRange(delimOption);
                 delimList.AddRange(defaultDelimiterChars);
                 //Delimeter character array
-                charList = delimList.ToArray();
+                delimCharArray = delimList.ToArray();
             }
             else
             {
-                charList = defaultDelimiterChars;
+                delimCharArray = defaultDelimiterChars;
             }
-            for (int i = 0; i < text.Length; i++)
-            {
+                //*******NEW ADDTION - REMOVE FOR LOOP as it is not needed
                 //Splits the string input to remove any and all delim's
-                string[] words = text[i].Split(charList);
+                string[] words = text[0].Split(delimCharArray);
                 foreach (var word in words)
                 {
                     if (word != "")
@@ -61,7 +60,7 @@ namespace R365CalculatorConsoleApp
                         }
                     }
                 }
-            }
+            
             //Try Catch that will throw exception when a negative number is found. 
             //If no negatives are found - totalSum will calculate and be displayed.
             try
