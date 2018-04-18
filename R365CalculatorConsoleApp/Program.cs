@@ -8,7 +8,7 @@ namespace R365CalculatorConsoleApp
     {
         static void Main(string[] args)
         {
-            ////[;][%][$]\n4;7%10$14
+            ////[;][%][$][&][#]\n4;7%10$14;54
             var line = Console.ReadLine();
             var input = Add(line);
             Console.ReadLine();
@@ -19,8 +19,7 @@ namespace R365CalculatorConsoleApp
             //Number Lists
             List<int> numbers = new List<int>();
             List<int> negativeNumbers = new List<int>();
-            //Default Delimeters
-            char[] defaultDelimCharArray = { '\\', '\n', 'n', '/', ',', ']' }; //*****NEW ADDITION - Changed naming convention to be less confusing - added new default delim
+            char[] defaultDelimCharArray = { '\\', '\n', 'n', '/', ',', ']' }; //*****NEW ADDITION - Changed naming convention to be less confusing - added new default delims
             char[] delimCharArray; //*****NEW ADDITION - Changed naming convention to be less confusing
             var delimList = new List<char>();
             var totalSum = 0;
@@ -43,21 +42,19 @@ namespace R365CalculatorConsoleApp
             string[] words = text[0].Split(delimCharArray, StringSplitOptions.RemoveEmptyEntries); //******NEW ADDITION - REMOVE Empty Entries
             foreach (var word in words)
             {
-                if (word != "")
+                //*****NEW ADDITION - REMOVED if statement as it is not needed with the empty string removal
+                int stringToInt = Convert.ToInt32(word);
+                //Check and ignore any converted int that is above 1000
+                if (stringToInt < 1000)
                 {
-                    int stringToInt = Convert.ToInt32(word);
-                    //Check and ignore any converted int that is above 1000
-                    if (stringToInt < 1000)
+                    //Negative Number check. Will add any negative numbers to list which will trigger exception
+                    if (stringToInt < 0)
                     {
-                        //Negative Number check. Will add any negative numbers to list which will trigger exception
-                        if (stringToInt < 0)
-                        {
-                            negativeNumbers.Add(stringToInt);
-                        }
-                        else
-                        {
-                            numbers.Add(stringToInt);
-                        }
+                        negativeNumbers.Add(stringToInt);
+                    }
+                    else
+                    {
+                        numbers.Add(stringToInt);
                     }
                 }
             }
