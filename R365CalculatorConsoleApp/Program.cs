@@ -72,7 +72,7 @@ namespace R365CalculatorConsoleApp
                 else
                 {
                     totalSum = numbers.Sum();
-                    Console.WriteLine("Total:" + " " + totalSum);
+                    Console.WriteLine("There are" + " " + numbers.Count() + " " + "numbers that total:" + " " + totalSum);
                 }
             }
             catch (Exception)
