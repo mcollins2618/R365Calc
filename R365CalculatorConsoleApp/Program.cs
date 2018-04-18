@@ -9,7 +9,7 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            ////[;][,][%][$][&][#]\n4;7$14;1014,19  \n4;6%8$1;-11;3
+            ////[;][,][%][$][&][#]\n4;7$14;1014,19
             var line = Console.ReadLine();
             var input = Add(line);
             Console.ReadLine();
@@ -28,7 +28,7 @@ namespace R365CalculatorConsoleApp
             bool delimContainsInt = delimStart.Any(char.IsDigit);//******NEW ADDITION Check to see if delimeters contain integer
             try
             {
-                if (delimContainsInt == true)
+                if (delimContainsInt == true && text[0].Contains(@"\n"))
                 {
                     throw new FormatException();
                 }
