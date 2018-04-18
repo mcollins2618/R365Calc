@@ -9,7 +9,7 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            ////[;][,][%][$][&][#]\n-4;7%-10$14;1014,19  \n4;6%8$1;-11;3
+            ////[;][,][%][$][&][#]\n4;7$14;1014,19  \n4;6%8$1;-11;3
             var line = Console.ReadLine();
             var input = Add(line);
             Console.ReadLine();
@@ -26,8 +26,6 @@ namespace R365CalculatorConsoleApp
             var totalSum = 0;
             var delimStart = text[0].Split(@"\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
             bool delimContainsInt = delimStart.Any(char.IsDigit);//******NEW ADDITION Check to see if delimeters contain integer
-            //Try Catch that will throw exception when a negative number is found. 
-            //If no negatives are found - totalSum will calculate and be displayed.
             try
             {
                 if (delimContainsInt == true)
@@ -79,10 +77,13 @@ namespace R365CalculatorConsoleApp
                     Console.WriteLine("There are" + " " + numbers.Count() + " " + "numbers that total:" + " " + totalSum);
                 }
             }
+            //Try Catch for Format Exception (Example - 1,\n)
             catch (FormatException)
             {
                 Console.WriteLine("Please use the correct format." + " " + text[0] + " " + "is not allowed.");
             }
+            //Try Catch that will throw exception when a negative number is found. 
+            //If no negatives are found - totalSum will calculate and be displayed.
             catch (Exception)
             {
                 Console.WriteLine("Negatives are not allowed!");
