@@ -8,8 +8,9 @@ namespace R365CalculatorConsoleApp
     {
         static void Main(string[] args)
         {
-
-            var input = Add("//[;][%][$]\n4;7%10$14");
+            ////[;][%][$]\n4;7%10$14
+            var line = Console.ReadLine();
+            var input = Add(line);
             Console.ReadLine();
         }
 
@@ -19,15 +20,15 @@ namespace R365CalculatorConsoleApp
             List<int> numbers = new List<int>();
             List<int> negativeNumbers = new List<int>();
             //Default Delimeters
-            char[] defaultDelimCharArray = { '\n', '/', ',', ']' };
+            char[] defaultDelimCharArray = { '\\', '\n', 'n', '/', ',', ']' }; //*****NEW ADDITION - Changed naming convention to be less confusing - added new default delim
             char[] delimCharArray; //*****NEW ADDITION - Changed naming convention to be less confusing
             var delimList = new List<char>();
             var totalSum = 0;
-            if (text[0].Contains("//"))
+            if (text[0].Contains("//") && text[0].Contains(@"\n"))
             {
                 //Custom Delimeter list creation
-                var delimStart = text[0].Split('\n').First();
-                char[] delimOption = delimStart.Split('/').Last().Distinct().ToArray(); //*****NEW ADDITION - Custom Delim options to be Distinct rather than showing duplicates
+                var delimStart = text[0].Split(@"\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
+                char[] delimOption = delimStart.Split("//").Last().Distinct().ToArray(); //*****NEW ADDITION - Custom Delim options to be Distinct rather than showing duplicates
                 delimList.AddRange(delimOption);
                 delimList.AddRange(defaultDelimCharArray);
                 //Delimeter character array
@@ -39,7 +40,7 @@ namespace R365CalculatorConsoleApp
             }
             //*******NEW ADDTION - REMOVE FOR LOOP as it is not needed
             //Splits the string input to remove any and all delim's
-            string[] words = text[0].Split(delimCharArray);
+            string[] words = text[0].Split(delimCharArray, StringSplitOptions.RemoveEmptyEntries); //******NEW ADDITION - REMOVE Empty Entries
             foreach (var word in words)
             {
                 if (word != "")
