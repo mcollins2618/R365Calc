@@ -8,7 +8,7 @@ namespace R365CalculatorConsoleApp
     {
         static void Main(string[] args)
         {
-            ////[;][%][$][&][#]\n4;7%10$14;54
+            ////[;][,][%][$][&][#]\n4;7%10$14;1014,19  \n4;6%8$1;11;3
             var line = Console.ReadLine();
             var input = Add(line);
             Console.ReadLine();
@@ -19,7 +19,7 @@ namespace R365CalculatorConsoleApp
             //Number Lists
             List<int> numbers = new List<int>();
             List<int> negativeNumbers = new List<int>();
-            char[] defaultDelimCharArray = { '\\', '\n', 'n', '/', ',', ']' }; //*****NEW ADDITION - Changed naming convention to be less confusing - added new default delims
+            char[] defaultDelimCharArray = { '\\', '\n', 'n', '/' }; //*****NEW ADDITION - Changed naming convention to be less confusing - edited default delims
             char[] delimCharArray; //*****NEW ADDITION - Changed naming convention to be less confusing
             var delimList = new List<char>();
             var totalSum = 0;
