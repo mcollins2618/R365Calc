@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace R365CalculatorConsoleApp
 {
@@ -9,8 +10,8 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var line = "//[;][,][%][$][&][#]\n4;7$14;1014,19";
-            var line2 = "//[;][,][%][$][&][:]\n4;7$3;1014:1";
+            var line = "//[;][,][%][$][&][#][:]\n9;7$14;1087,19:16";
+            var line2 = "//[;][,][%][$][&][1]\n4;32$3;1014:1";
             var input = Add(line, line2);
             Console.ReadLine();
         }
@@ -93,7 +94,8 @@ namespace R365CalculatorConsoleApp
             //Try Catch for Format Exception (Example - 1,\n)
             catch (FormatException)
             {
-                Console.WriteLine("Please use the correct format." + " " + illegalFormatList[0] + " " + "is not allowed.");
+                string replacement = Regex.Replace(illegalFormatList[0], @"\t|\n|\r", "");
+                Console.WriteLine("Please use the correct format." + " " + replacement + " " + "is not allowed.");
             }
             //Try Catch that will throw exception when a negative number is found. 
             //If no negatives are found - totalSum will calculate and be displayed.
