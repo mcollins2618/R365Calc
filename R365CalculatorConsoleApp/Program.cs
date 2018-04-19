@@ -10,9 +10,12 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var line = "//[;][,][%][$][&][:][:]\n9;7$14;1087,19:16";
-            var line2 = "//[;][,][%][$][&][1]\n4;32$3;1014:1";
-            var input = Add(line, line2);
+            var line = "//[;][,][#][$][&][:]\n9;7$14;1087,19:16";
+            var line2 = "//[;][,][%][$][&][:]\n4;32$3;1014:1";
+            var line3 = "//;\n1;98;21;7";
+            var line4 = "//[***]\n1***2***3";
+            var line5 = "//[*][%]\n1*2%3";
+            var input = Add(line, line2, line3, line4, line5);
             Console.ReadLine();
         }
 
@@ -70,7 +73,6 @@ namespace R365CalculatorConsoleApp
                                 numbers.Add(stringToInt);
                             }
                         }
-
                     }
                 }
             }
@@ -80,7 +82,7 @@ namespace R365CalculatorConsoleApp
                 {
                     throw new FormatException();
                 }
-                if (negativeNumbers.Count > 0)
+                else if (negativeNumbers.Count > 0)
                 {
                     throw new Exception();
                 }
@@ -89,13 +91,12 @@ namespace R365CalculatorConsoleApp
                     totalSum = numbers.Sum();
                     Console.WriteLine("There are" + " " + numbers.Count() + " " + "numbers that total:" + " " + totalSum);
                 }
-
             }
             //Try Catch for Format Exception (Example - 1,\n)
             catch (FormatException)
             {
                 Console.WriteLine("Please use the correct format.");
-                illegalFormatList.ForEach(x => Console.Write(Regex.Replace(x, @"\t|\n|\r", "") + " " + "is not allowed."));
+                illegalFormatList.ForEach(x => Console.Write(Regex.Replace(x, @"\t|\n|\r", "") + " " + "is not allowed.\n"));
             }
             //Try Catch that will throw exception when a negative number is found. 
             //If no negatives are found - totalSum will calculate and be displayed.
