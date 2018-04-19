@@ -15,7 +15,11 @@ namespace R365CalculatorConsoleApp
             var line3 = "//;\n1;98;21;7";
             var line4 = "//[***]\n1***2***3";
             var line5 = "//[*][%]\n1*2%3";
-            Add(line, line2, line3, line4, line5);
+            var line6 = "1,2";
+            var line7 = "5";
+            var line8 = "";
+            //var illegalFormatLine = "1,\n";
+            Add(line, line2, line3, line4, line5, line6, line7, line8);
             Console.ReadLine();
         }
 
