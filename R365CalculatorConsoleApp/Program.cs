@@ -15,7 +15,7 @@ namespace R365CalculatorConsoleApp
             var line3 = "//;\n1;98;21;7";
             var line4 = "//[***]\n1***2***3";
             var line5 = "//[*][%]\n1*2%3";
-            var input = Add(line, line2, line3, line4, line5);
+            Add(line, line2, line3, line4, line5);
             Console.ReadLine();
         }
 
@@ -32,8 +32,8 @@ namespace R365CalculatorConsoleApp
             for (int i = 0; i < text.Length; i++)
             {
                 var delimStart = text[i].Split("\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
-                bool delimContainsInt = delimStart.Any(char.IsDigit);//******NEW ADDITION Check to see if delimeters contain integer
-                if (delimContainsInt == true && text[i].Contains("\n"))
+                bool delimContainsIllegalChar = delimStart.Any(char.IsDigit) || delimStart.Any(char.IsLetter);//******NEW ADDITION Check to see if delimeters contain integer
+                if (delimContainsIllegalChar == true && text[i].Contains("\n"))
                 {
                     illegalFormatList.Add(text[i]);
                 }
