@@ -9,9 +9,9 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            ////[;][,][%][$][&][#]\n4;7$14;1014,19
-            var line = Console.ReadLine();
-            var input = Add(line);
+            var line = "//[;][,][%][$][&][#]\n4;7$14;1014,-19";
+            var line2 = "//[;][,][%][$][&][#]\n4;7$14;1014,-1";
+            var input = Add(line, line2);
             Console.ReadLine();
         }
 
@@ -24,15 +24,15 @@ namespace R365CalculatorConsoleApp
             char[] delimCharArray; //*****NEW ADDITION - Changed naming convention to be less confusing
             var delimList = new List<char>();
             var totalSum = 0;
-            var delimStart = text[0].Split(@"\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
-            bool delimContainsInt = delimStart.Any(char.IsDigit);//******NEW ADDITION Check to see if delimeters contain integer
-            try
+            for (int i = 0; i < text.Length; i++)
             {
-                if (delimContainsInt == true && text[0].Contains(@"\n"))
+                var delimStart = text[i].Split("\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
+                bool delimContainsInt = delimStart.Any(char.IsDigit);//******NEW ADDITION Check to see if delimeters contain integer
+                if (delimContainsInt == true && text[i].Contains(@"\n"))
                 {
                     throw new FormatException();
                 }
-                if (text[0].Contains("//") && text[0].Contains(@"\n"))
+                if (text[i].Contains("//") && text[i].Contains("\n"))
                 {
                     //Custom Delimeter list creation
                     //var delimStart = text[0].Split(@"\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
@@ -48,7 +48,7 @@ namespace R365CalculatorConsoleApp
                 }
                 //*******NEW ADDTION - REMOVE FOR LOOP as it is not needed
                 //Splits the string input to remove any and all delim's
-                string[] words = text[0].Split(delimCharArray, StringSplitOptions.RemoveEmptyEntries); //******NEW ADDITION - REMOVE Empty Entries
+                string[] words = text[i].Split(delimCharArray, StringSplitOptions.RemoveEmptyEntries); //******NEW ADDITION - REMOVE Empty Entries
                 foreach (var word in words)
                 {
                     //*****NEW ADDITION - REMOVED if statement as it is not needed with the empty string removal
@@ -67,6 +67,10 @@ namespace R365CalculatorConsoleApp
                         }
                     }
                 }
+
+            }
+            try
+            {
                 if (negativeNumbers.Count > 0)
                 {
                     throw new Exception();
@@ -76,6 +80,7 @@ namespace R365CalculatorConsoleApp
                     totalSum = numbers.Sum();
                     Console.WriteLine("There are" + " " + numbers.Count() + " " + "numbers that total:" + " " + totalSum);
                 }
+
             }
             //Try Catch for Format Exception (Example - 1,\n)
             catch (FormatException)
@@ -87,9 +92,8 @@ namespace R365CalculatorConsoleApp
             catch (Exception)
             {
                 Console.WriteLine("Negatives are not allowed!");
-                negativeNumbers.ForEach(i => Console.Write("{0}\t", i));
+                negativeNumbers.ForEach(x => Console.Write("{0}\t", x));
             }
-
 
             return totalSum;
 
