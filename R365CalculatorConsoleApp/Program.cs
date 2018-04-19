@@ -9,8 +9,8 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var line = "//[;][,][%][$][&][#]\n4;7$14;1014,-19";
-            var line2 = "//[;][,][%][$][&][#]\n4;7$14;1014,-1";
+            var line = "//[;][,][%][$][&][#]\n4;7$14;1014,19";
+            var line2 = "//[;][,][%][$][&][:]\n4;7$3;1014:1";
             var input = Add(line, line2);
             Console.ReadLine();
         }
@@ -20,6 +20,7 @@ namespace R365CalculatorConsoleApp
             //Number Lists
             List<int> numbers = new List<int>();
             List<int> negativeNumbers = new List<int>();
+            List<string> illegalFormatList = new List<string>();
             char[] defaultDelimCharArray = { '\\', '\n', 'n', '/', ',' }; //*****NEW ADDITION - Changed naming convention to be less confusing - edited default delims
             char[] delimCharArray; //*****NEW ADDITION - Changed naming convention to be less confusing
             var delimList = new List<char>();
@@ -28,49 +29,56 @@ namespace R365CalculatorConsoleApp
             {
                 var delimStart = text[i].Split("\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
                 bool delimContainsInt = delimStart.Any(char.IsDigit);//******NEW ADDITION Check to see if delimeters contain integer
-                if (delimContainsInt == true && text[i].Contains(@"\n"))
+                if (delimContainsInt == true && text[i].Contains("\n"))
                 {
-                    throw new FormatException();
-                }
-                if (text[i].Contains("//") && text[i].Contains("\n"))
-                {
-                    //Custom Delimeter list creation
-                    //var delimStart = text[0].Split(@"\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
-                    char[] delimOption = delimStart.Split("//").Last().Distinct().ToArray(); //*****NEW ADDITION - Custom Delim options to be Distinct rather than showing duplicates
-                    delimList.AddRange(delimOption);
-                    delimList.AddRange(defaultDelimCharArray);
-                    //Delimeter character array
-                    delimCharArray = delimList.ToArray();
+                    illegalFormatList.Add(text[i]);
                 }
                 else
                 {
-                    delimCharArray = defaultDelimCharArray;
-                }
-                //*******NEW ADDTION - REMOVE FOR LOOP as it is not needed
-                //Splits the string input to remove any and all delim's
-                string[] words = text[i].Split(delimCharArray, StringSplitOptions.RemoveEmptyEntries); //******NEW ADDITION - REMOVE Empty Entries
-                foreach (var word in words)
-                {
-                    //*****NEW ADDITION - REMOVED if statement as it is not needed with the empty string removal
-                    int stringToInt = Convert.ToInt32(word);
-                    //Check and ignore any converted int that is above 1000
-                    if (stringToInt < 1000)
+                    if (text[i].Contains("//") && text[i].Contains("\n"))
                     {
-                        //Negative Number check. Will add any negative numbers to list which will trigger exception
-                        if (stringToInt < 0)
+                        //Custom Delimeter list creation
+                        //var delimStart = text[0].Split(@"\n").First(); //******NEW ADDITION allows for double \\ on new line console submit
+                        char[] delimOption = delimStart.Split("//").Last().Distinct().ToArray(); //*****NEW ADDITION - Custom Delim options to be Distinct rather than showing duplicates
+                        delimList.AddRange(delimOption);
+                        delimList.AddRange(defaultDelimCharArray);
+                        //Delimeter character array
+                        delimCharArray = delimList.ToArray();
+                    }
+                    else
+                    {
+                        delimCharArray = defaultDelimCharArray;
+                    }
+                    //*******NEW ADDTION - REMOVE FOR LOOP as it is not needed
+                    //Splits the string input to remove any and all delim's
+                    string[] words = text[i].Split(delimCharArray, StringSplitOptions.RemoveEmptyEntries); //******NEW ADDITION - REMOVE Empty Entries
+                    foreach (var word in words)
+                    {
+                        //*****NEW ADDITION - REMOVED if statement as it is not needed with the empty string removal
+                        int stringToInt = Convert.ToInt32(word);
+                        //Check and ignore any converted int that is above 1000
+                        if (stringToInt < 1000)
                         {
-                            negativeNumbers.Add(stringToInt);
+                            //Negative Number check. Will add any negative numbers to list which will trigger exception
+                            if (stringToInt < 0)
+                            {
+                                negativeNumbers.Add(stringToInt);
+                            }
+                            else
+                            {
+                                numbers.Add(stringToInt);
+                            }
                         }
-                        else
-                        {
-                            numbers.Add(stringToInt);
-                        }
+
                     }
                 }
-
             }
             try
             {
+                if (illegalFormatList.Count > 0)
+                {
+                    throw new FormatException();
+                }
                 if (negativeNumbers.Count > 0)
                 {
                     throw new Exception();
@@ -85,7 +93,7 @@ namespace R365CalculatorConsoleApp
             //Try Catch for Format Exception (Example - 1,\n)
             catch (FormatException)
             {
-                Console.WriteLine("Please use the correct format." + " " + text[0] + " " + "is not allowed.");
+                Console.WriteLine("Please use the correct format." + " " + illegalFormatList[0] + " " + "is not allowed.");
             }
             //Try Catch that will throw exception when a negative number is found. 
             //If no negatives are found - totalSum will calculate and be displayed.
