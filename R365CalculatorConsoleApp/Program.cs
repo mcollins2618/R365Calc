@@ -11,7 +11,7 @@ namespace R365CalculatorConsoleApp
         {
 
             var line = "//[;][,][#][$][&][:]\n9;7$14;1087,19:16";
-            var line2 = "//[;][,][%][$][&][:]\n4;32$3;1014:1";
+            var line2 = "//[;][#][%][$][&][:]\n4;32$3;1014:1";
             var line3 = "//;\n1;98;21;7";
             var line4 = "//[***]\n1***2***3";
             var line5 = "//[*][%]\n1*2%3";
@@ -95,7 +95,7 @@ namespace R365CalculatorConsoleApp
             //Try Catch for Format Exception (Example - 1,\n)
             catch (FormatException)
             {
-                Console.WriteLine("Please use the correct format.");
+                Console.WriteLine("Please use the correct format. //[delim1][delim2](newLine)[number1][delim1/2][number2]");
                 illegalFormatList.ForEach(x => Console.Write(Regex.Replace(x, @"\t|\n|\r", "") + " " + "is not allowed.\n"));
             }
             //Try Catch that will throw exception when a negative number is found. 
