@@ -10,7 +10,7 @@ namespace R365CalculatorConsoleApp
         static void Main(string[] args)
         {
 
-            var line = "//[;][,][%][$][&][#][:]\n9;7$14;1087,19:16";
+            var line = "//[;][,][%][$][&][:][:]\n9;7$14;1087,19:16";
             var line2 = "//[;][,][%][$][&][1]\n4;32$3;1014:1";
             var input = Add(line, line2);
             Console.ReadLine();
@@ -94,8 +94,8 @@ namespace R365CalculatorConsoleApp
             //Try Catch for Format Exception (Example - 1,\n)
             catch (FormatException)
             {
-                string replacement = Regex.Replace(illegalFormatList[0], @"\t|\n|\r", "");
-                Console.WriteLine("Please use the correct format." + " " + replacement + " " + "is not allowed.");
+                Console.WriteLine("Please use the correct format.");
+                illegalFormatList.ForEach(x => Console.Write(Regex.Replace(x, @"\t|\n|\r", "") + " " + "is not allowed."));
             }
             //Try Catch that will throw exception when a negative number is found. 
             //If no negatives are found - totalSum will calculate and be displayed.
