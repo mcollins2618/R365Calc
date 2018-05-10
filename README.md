@@ -1,5 +1,5 @@
 # R365Calc
-Calculator created to isolate and add numbers within an unknown number of strings. Inlcludes delimeter filtering.<br>
+Calculator created to isolate and add numbers within an unknown number of strings. Includes delimeter filtering.<br>
 Multiple commits to allow for ever changing conditional steps:<br>
 
 1.)Create a simple String calculator with a method int Add(string numbers)<br>
